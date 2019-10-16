@@ -1,9 +1,9 @@
 from random import randint
 
-from objects import *
+from objects import * # Predator, Victim, ...
 # (так, как в предыдущей строчке, писать довольно некрасиво,
 # но нам придется так делать, чтобы main мог импортировать
-# из нас всё, что объявлено в objects
+# из нас всё, что объявлено в objects)
 
 # Не забывайте, что вы можете еще объявлять тут какие-нить
 # локальные функции чисто для себя или даже выносить
@@ -13,8 +13,8 @@ from objects import *
 def world_iteration(objects, ...):
     """Performs one iteration of the world's life
     Parameters:
-        object (`dict`): {object_type (`type`): objects_of_this_type (`list`)}
-            A dict from object type to the list of objects of this type
+        object (dict): {object_type (`type`): objects_of_this_type (`list`)}
+            A dict from objects' type to the list of the objects of this type
         ...
     """
     # Обратите внимание: ключами словаря objects не являются
@@ -32,17 +32,17 @@ def world_iteration(objects, ...):
     # max_map_x и max_map_y как границы карты
 
     predators = objects[Predator]
-    assert(len(predators) is 1) # Мы ведь считаем, что хищник 1?
+    assert(len(predators) == 1) # Мы ведь считаем, что хищник 1?
     predator = predators[0]
 
-    victims = objects[victims]
+    victims = objects[Victim]
 
     # Просто для примера как-нибудь подвинем хищника
     predator.x += 0.4
     predator.y += 0.4
     if predator.x > max_map_x:
         predator.x = max_map_x
-    elif predator.y > max_map_y:
+    if predator.y > max_map_y:
         predator.y = max_map_y
 
     # Ну и жертв тоже как-нить там

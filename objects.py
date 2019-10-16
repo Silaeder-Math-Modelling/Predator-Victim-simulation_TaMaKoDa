@@ -8,8 +8,8 @@ class Animal:
         Parameters:
             additional_initializer (func, optional):
                 An additional initializer of a certain strategy.
-                Default: strategy-defined function
-                Pass an empty `lambda` (not `None`) to skip
+                Default: automatically imported function, defined by a strategy
+                Pass `lambda self: None` (not just `None`) to skip
                 additional initialization
             additional_initializer_args (list, optional):
                 A list of arguments to be passed to the
@@ -18,9 +18,6 @@ class Animal:
                 A dict of keyword arguments to be passed to the
                 additional initializer
         """
-        # Стиль docstring-ов к функциям давайте сохранять такой же, как
-        # в NiMaTa LentaBot (покажите Даше, прошарьте ее слегка)
-
         # Среди аргументов выше, как вы могли прочитать в докстринге,
         # additional_initializer - это функция, которую мы принимаем, чтобы
         # провести инициализацию под стратегию. У меня хреново получается
@@ -44,7 +41,7 @@ class Animal:
         if additional_initializer_args is None:
             additional_initializer_args = []
 
-        # Если доп. keyaord arguments не указаны, то оставим их пустыми:
+        # Если доп. keyword arguments не указаны, то оставим их пустыми:
         if additional_initializer_kwargs is None:
             additional_initializer_kwargs = {}
 
@@ -81,7 +78,7 @@ class Predator(Animal):
     # Объявим по дефолту пустую доп. инициализацию:
     predator_additional_init = lambda self: None
 
-    def __init__(self, parent_initializer_args=None, paranet_initializer_kwargs=None,
+    def __init__(self, parent_initializer_args=None, parent_initializer_kwargs=None,
             additional_initializer=None, additional_initializer_args=None,
             additional_initializer_kwargs=None):
         """Initializes a `Predator` object

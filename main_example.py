@@ -8,13 +8,13 @@ from strategy_advanced import *
 def main():
     objects = {Predator: [], Victim: []}
     objects[Predator].append(
-        Predator(parent_intializer_kwargs={'age': 7},
+        Predator(parent_intializer_kwargs={'additional_initializer_kwargs': {'age': 7}},
             additional_initializer_kwargs={'max_velocity_when_not_hungry': 2})
         )
     for i in range(100):
         objects[Victim].append(Victim())
 
-    while len(objects[Victim] > 10):
+    while len(objects[Victim]) > 10:
         world_iteration(objects)
 
 

@@ -1,4 +1,3 @@
-from functools import reduce
 from random import randint
 
 from objects import * # Animal, Predator, Victim, ...
@@ -38,20 +37,14 @@ def world_iteration(objects, ...):
     # В этом примере далее считаем, что там были переданы
     # max_map_x и max_map_y как границы карты
     predators = objects[predators]
-    not_predators = reduce(lambda a,b: a+b,
-        [obj for obj_type, obj in objects.items() \
-        if issubclass(obj_type, Animal) and obj_type is not Predator])
-    # 1. Я написал lambda a,b: a+b с такими странными пробелами
-    # не потому, что я извращенец, а потому что PEP8 разрешает
-    # опускать пробелы, если либо приоритет операций позволяет,
-    # либо и так хорошо читается и очень простой код
-    # 2. Если вы не понимаете про reduce или про dict.items(),
+    not_predators = [obj for obj_type, obj in objects.items() \
+        if issubclass(obj_type, Animal) and (obj_type is not Predator)]
+    # 1. Если вы не понимаете про dict.items(),
     # тоже стоит погуглить. Про issubclass можно погуглить, а
     # можно догодаться
-    # 3. Вот, почему ключи objects - это не строки, а типы.
-    # Все-таки это файл с not_minimal стратегией (хотел написать
-    # advanced, но тогда бы алфавитная сортировка нарушилась)
-    # и не удержался тут не рассказать. Смотрите, в этом примере
+    # 2. Вот, почему ключи objects - это не строки, а типы.
+    # Все-таки это файл с advanced стратегией
+    # и я не удержался тут не рассказать. Смотрите, в этом примере
     # нам все равно, какие типы в принципе объявлены и существуют
     # в файле objects. Мы можем при помощи конструкции выше
     # собрать в принципе всех животных, которые не хищники.
