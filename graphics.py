@@ -12,22 +12,20 @@ class Field():
         """
         self.max_field_x = max_field_x
         self.max_field_y = max_field_y
-        self.predator = objects[Predator][0]
-        self.victims = objects[Victim]
 
-    def update(self):
+    def update(self, predator, victims):
         """This method update victims and predator's coordinates
         """
-        self.predator = objects[Predator][0]
-        self.victims = objects[Victim]
+        self.predator = predator
+        self.victims = victims
     
     def show(self):     #Перед вызовом необходимо обновить поле
         """This method print field in ascii pseudographics 
         """
         field = []
-        for i in self.max_field_y:
-            field.append('#'*self.max_field_x)      #Будем обозначать '#' пустую клетку
+        for i in range(self.max_field_y):
+            field.append(['#' for i in range(self.max_field_x)])
         field[self.predator.y][self.predator.x] = '0'   #Будем обозначать '0' охотника
         for victim in self.victims:
             field[victim.y][victim.x] = 'x'     #Будем обозначать 'x' жертв
-        print(field)
+        print('\n'.join(''.join(line) for line in field))
