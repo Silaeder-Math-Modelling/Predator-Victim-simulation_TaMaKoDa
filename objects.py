@@ -1,12 +1,14 @@
 class Animal:
     animal_additional_init = lambda self: None
 
-    def __init__(self, x, y, additional_initializer=None, additional_initializer_args=None, \
+    def __init__(self, x, y, velocity, additional_initializer=None, additional_initializer_args=None, \
             additional_initializer_kwargs=None):
         """Initializes an `Animal` object
         Parameters:
-            x and y (int numbers):
+            x and y (int):
                 Coordinates of animal
+            velocity (int):
+                The animal velocity
             additional_initializer (func, optional):
                 An additional initializer of a certain strategy.
                 Default: automatically imported function, defined by a strategy
@@ -34,6 +36,7 @@ class Animal:
 
         self.x = x
         self.y = y
+        self.velocity = velocity
         
         # Special of strategy
         additional_initializer(*additional_initializer_args,
@@ -43,14 +46,11 @@ class Animal:
 class Predator(Animal):
     predator_additional_init = lambda self: None
 
-    def __init__(self, predator_velocity, parent_initializer_args=None, parent_initializer_kwargs=None,
+    def __init__(self, parent_initializer_args=None, parent_initializer_kwargs=None,
             additional_initializer=None, additional_initializer_args=None,
             additional_initializer_kwargs=None):
         """Initializes a `Predator` object
         Parameters:
-            predator_velociry (int number):
-                Velocity of predator. ATTENTION!!! Velocity of
-                predator smaller then velocity of victim
             parent_initializer_args (list, optional):
                 A list of argumetns to be passed to the
                 `Animal` initializer
@@ -93,9 +93,6 @@ class Predator(Animal):
         # If additional keyword arguments are not defined
         if additional_initializer_kwargs is None:
             additional_initializer_kwargs = {}
-
-        # Initialization of predator
-        self.velocity_of_predator = predator_velocity
         
         # Special of strategy
         additional_initializer(*additional_initializer_args,
@@ -105,14 +102,11 @@ class Predator(Animal):
 class Victim(Animal):
     victim_additional_init = lambda self: None
 
-    def __init__(self, victim_velocity, parent_initializer_args=None, parent_initializer_kwargs=None,
+    def __init__(self, parent_initializer_args=None, parent_initializer_kwargs=None,
             additional_initializer=None, additional_initializer_args=None,
             additional_initializer_kwargs=None):
         """Initializes a `Victim` object
         Parameters:
-            victim_velocity (int number):
-                Velocity of victim. ATTENTION!!! Velocity of
-                victim bigger then velocity of predator
             parent_initializer_args (list, optional):
                 A list of argumetns to be passed to the
                 `Animal` initializer
@@ -155,9 +149,6 @@ class Victim(Animal):
         # If additional keyword arguments are not defined
         if additional_initializer_kwargs is None:
             additional_initializer_kwargs = {}
-            
-        # Initialization of victim
-        self.velocity_of_victim = victim_velocity
   
         # Special of strategy
         additional_initializer(*additional_initializer_args,
