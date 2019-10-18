@@ -105,7 +105,7 @@ class Predator(Animal):
 class Victim(Animal):
     victim_additional_init = lambda self: None
 
-    def __init__(self, victim_velocity, parent_initializer_args=None, parant_initializer_kwargs=None,
+    def __init__(self, victim_velocity, parent_initializer_args=None, parent_initializer_kwargs=None,
             additional_initializer=None, additional_initializer_args=None,
             additional_initializer_kwargs=None):
         """Initializes a `Victim` object
