@@ -1,3 +1,5 @@
+from termcolor import colored
+
 from objects import Animal, Predator
 
 
@@ -25,7 +27,7 @@ class Field():
         field = []
         for i in range(self.max_field_y):
             field.append(['#' for i in range(self.max_field_x)])
-        field[self.predator.y][self.predator.x] = '0'   #Будем обозначать '0' охотника
+        field[self.predator.y][self.predator.x] = colored('0', 'red')   #Будем обозначать '0' охотника
         for victim in self.victims:
-            field[victim.y][victim.x] = 'x'     #Будем обозначать 'x' жертв
+            field[victim.y][victim.x] = colored('x', 'green')     #Будем обозначать 'x' жертв
         print('\n'.join(''.join(line) for line in field))
