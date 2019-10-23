@@ -24,8 +24,8 @@ def world_iteration(objects, max_field_x, max_field_y):
         raise ValueError("There must be at least one victim")
 
     for victim in victims:
-        victim.x += randint(-1, 1)
-        victim.y += randint(-1, 1)
+        victim.x += randint(-victim.velocity, victim.velocity)
+        victim.y += randint(-victim.velocity, victim.velocity)
 
     move_predator_to_victim(predator, get_nearest_victim(predator, victims))
 
