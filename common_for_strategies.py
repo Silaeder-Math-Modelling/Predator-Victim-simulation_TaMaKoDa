@@ -15,6 +15,37 @@ def get_nearest_victim(predator, victims):
             ans = victim
     return ans
 
+def move_predator_to_victim(predator, victim):
+    """Moves the given predator to the given victim,
+        not making steps greater than predator.velocity by each
+        of the axes
+    Parameters:
+        predator (Predator) - the predator to be moved
+        victim (Victim) - the victim to be moved to
+    """
+    def get_new_coordinate(predator_coordinate, victim_coordinate, \
+            predator_velocity):
+        if(abs(predator_coordinate - victim_coordinate) <= predator_velocity):
+            return victim_coordinate
+        elif victim_coordinate < predator_coordinate:
+            return predator_coordinate - predator_velocity
+        elif victim_coordinate > predator_coordinate:
+            return predator_coordinate + predator_velocity
+
+    predator.x = get_new_coordinate(predator.x, victim.x, predator.velocity)
+    predator.y = get_new_coordinate(predator.y, victim.y, predator.velocity)
+
+def clear_killed_victims(victims, predator):
+    """Returns an array of victims which are not under the predator
+    Parameters:
+        victims (list[Victim]): The list of victims to be filtered
+        predator (Predator): The predator
+    Returns:
+        list[Victim]: Alive victims
+    """
+    return [victim for victim in victims if victim.x != predator.x or \
+        victim.y != predator.y]
+
 def normalize_coordinates_to_field_size(animals, field_size):
     """Moves animals which are out of the field bounds back to it
     Parameters:
