@@ -3,9 +3,8 @@ from random import randint
 # Have to do the following to let main file
 # import all the required objects from me
 from objects import *
-from common_for_strategies import get_nearest_victim, \
-    normalize_coordinates_to_field_size, move_predator_to_victim, \
-    clear_killed_victims
+from common_for_strategies import predator_move, \
+    normalize_coordinates_to_field_size
 
 def world_iteration(objects, max_field_x, max_field_y):
     """Performs one iteration of the world's life
@@ -27,14 +26,13 @@ def world_iteration(objects, max_field_x, max_field_y):
         victim.x += randint(-victim.velocity, victim.velocity)
         victim.y += randint(-victim.velocity, victim.velocity)
 
-    move_predator_to_victim(predator, get_nearest_victim(predator, victims))
-
-    victims = clear_killed_victims(victims, predator)
-
     normalize_coordinates_to_field_size(
         [predator] + [victim for victim in victims], (max_field_x, max_field_y)
         )
 
     objects[Victim] = victims
+    objects[Predator] = [predator]
+
+    objects = predator_move(objects)
 
     return objects

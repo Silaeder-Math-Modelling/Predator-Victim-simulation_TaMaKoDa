@@ -46,11 +46,14 @@ class Animal:
 class Predator(Animal):
     predator_additional_init = lambda self: None
 
-    def __init__(self, parent_initializer_args=None, parent_initializer_kwargs=None,
+    def __init__(self, victim_eating_time, \
+            parent_initializer_args=None, parent_initializer_kwargs=None,
             additional_initializer=None, additional_initializer_args=None,
             additional_initializer_kwargs=None):
         """Initializes a `Predator` object
         Parameters:
+            victim_eating_time (int): Time (in simulation steps)
+                which it takes to eat a victim by the predator
             parent_initializer_args (list, optional):
                 A list of argumetns to be passed to the
                 `Animal` initializer
@@ -81,6 +84,9 @@ class Predator(Animal):
         # Initialization like an animal
         Animal.__init__(self, *parent_initializer_args,
             **parent_initializer_kwargs)
+
+        self.victim_eating_time = victim_eating_time
+        self.ready_to_run_in = 0
 
         # If initialization is not defined
         if additional_initializer is None:

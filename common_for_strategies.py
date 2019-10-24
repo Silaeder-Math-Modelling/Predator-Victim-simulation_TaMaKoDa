@@ -1,6 +1,19 @@
 from math import sqrt
 
-def get_nearest_victim(predator, victims):
+from objects import Predator, Victim
+
+
+def get_distance(a, b):
+    """Returns the distance between two simulation
+        objects
+    Parameters:
+        a, b (object): The objects to calculate
+            distance between
+    """
+    return sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
+
+
+def _get_nearest_victim(predator, victims):
     """Returns a victim nearest to the predator
     Parameters:
         predator (Predator): The predator
@@ -10,12 +23,12 @@ def get_nearest_victim(predator, victims):
     """
     ans = victims[0]
     for victim in victims:
-        distance = lambda a, b: sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
-        if distance(predator, victim) < distance(predator, ans):
+        if get_distance(predator, victim) < \
+                get_distance(predator, ans):
             ans = victim
     return ans
 
-def move_predator_to_victim(predator, victim):
+def _move_predator_to_victim(predator, victim):
     """Moves the given predator to the given victim,
         not making steps greater than predator.velocity by each
         of the axes
@@ -35,16 +48,40 @@ def move_predator_to_victim(predator, victim):
     predator.x = get_new_coordinate(predator.x, victim.x, predator.velocity)
     predator.y = get_new_coordinate(predator.y, victim.y, predator.velocity)
 
-def clear_killed_victims(victims, predator):
+def _clear_killed_victims(victims, predator):
     """Returns an array of victims which are not under the predator
     Parameters:
         victims (list[Victim]): The list of victims to be filtered
         predator (Predator): The predator
     Returns:
-        list[Victim]: Alive victims
+        tuple(list[Victim], int): Alive victims and number of killed victims
     """
-    return [victim for victim in victims if victim.x != predator.x or \
+    ans = [victim for victim in victims if victim.x != predator.x or \
         victim.y != predator.y]
+    return (ans, len(victims) - len(ans))
+
+def predator_move(objects): # Is common for all strategies (by the problem condition)
+    """Simulates the predator move in a certain simulation iteration
+    Parameters:
+        objects (dict{type: list[objects_of_this_type]}): The simulation objects
+    Returns:
+        dict{type: list[objects_of_this_type]}: The simulation objects after
+            the predator's move
+    """
+    predator = objects[Predator][0]
+    victims = objects[Victim]
+
+    if predator.ready_to_run_in != 0:
+        predator.ready_to_run_in -= 1
+    else:
+        _move_predator_to_victim(predator, \
+            _get_nearest_victim(predator, victims))
+    victims, n_of_killed = _clear_killed_victims(victims, predator)
+    predator.ready_to_run_in += predator.victim_eating_time * n_of_killed
+    objects[Victim] = victims
+
+    return objects
+
 
 def normalize_coordinates_to_field_size(animals, field_size):
     """Moves animals which are out of the field bounds back to it
