@@ -3,38 +3,38 @@ from math import sqrt
 from objects import Predator, Victim
 
 
-def get_distance(a, b):
+def get_distance(objectA, objectB):
     """Returns the distance between two simulation
         objects
     Parameters:
-        a, b (object): The objects to calculate
+        objectA, objectB (object): The objects to calculate
             distance between
     """
-    return sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
+    return sqrt((objectA.x - objectB.x)**2 + (objectA.y - objectB.y)**2)
 
 
-def move_animal_from_another(animal_A, animal_B):
-    """Moves animal_A away from animal_B
+def move_animal_from_another(animalA, animalB):
+    """Moves animalA away from animalB
         not making steps greater than animal.velocity by each
         of the axes
     Parameters:
-        animal_A (object): The animal, who run away
-        animal_B (object): The animal, that animal_A run away from
+        animalA (object): The animal, which runs away
+        animalB (object): The animal, which animalA runs away from
     """
     def get_new_coordinate(animalA_coordinate, animalB_coordinate, \
-            animalA_velocity, distance_AB):
-        if animalA_coordinate - animalB_coordinate == 0:
+            animalA_velocity):
+        if animalA_coordinate == animalB_coordinate:
             return animalA_coordinate
         elif animalA_coordinate > animalB_coordinate:
             return animalA_coordinate + animalA_velocity
         else:
             return animalA_coordinate - animalA_velocity
     
-    if get_distance(animal_A, animal_B) < animal_A.visibility_area:
-        animal_A.x = get_new_coordinate(animal_A.x, animal_B.x, \
-                animal_A.velocity, get_distance(animal_A, animal_B))
-        animal_A.y = get_new_coordinate(animal_A.y, animal_B.y, \
-                animal_A.velocity, get_distance(animal_A, animal_B))
+    if get_distance(animalA, animalB) < animalA.visibility_area:
+        animalA.x = get_new_coordinate(animalA.x, animalB.x, \
+                animalA.velocity, get_distance(animalA, animalB))
+        animalA.y = get_new_coordinate(animalA.y, animalB.y, \
+                animalA.velocity, get_distance(animalA, animalB))
 
 
 def _get_nearest_victim(predator, victims):
