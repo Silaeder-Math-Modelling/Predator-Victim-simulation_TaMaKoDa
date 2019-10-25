@@ -32,9 +32,9 @@ def move_animal_from_another(animalA, animalB):
     
     if get_distance(animalA, animalB) < animalA.visibility_area:
         animalA.x = get_new_coordinate(animalA.x, animalB.x, \
-                animalA.velocity, get_distance(animalA, animalB))
+                animalA.velocity)
         animalA.y = get_new_coordinate(animalA.y, animalB.y, \
-                animalA.velocity, get_distance(animalA, animalB))
+                animalA.velocity)
 
 
 def _get_nearest_victim(predator, victims):
