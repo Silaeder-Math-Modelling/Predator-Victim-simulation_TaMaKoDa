@@ -1,4 +1,5 @@
 from math import sqrt
+from random import randint
 
 from objects import Predator, Victim
 
@@ -12,6 +13,16 @@ def get_distance(objectA, objectB):
     """
     return sqrt((objectA.x - objectB.x)**2 + (objectA.y - objectB.y)**2)
 
+
+def move_victim_random(victim, predator):
+    x_move = 0
+    y_move = 0
+    if randint(0, 99) < 30:
+        x_move = randint(-victim.velocity, victim.velocity)
+        y_move = randint(-victim.velocity, victim.velocity)
+    if sqrt((victim.x + x_move - predator.x)**2 + (victim.y + y_move - predator.y)**2) > victim.visibility_area:
+        victim.x += x_move
+        victim.y += y_move
 
 def move_animal_from_another(animalA, animalB):
     """Moves animalA away from animalB
@@ -30,11 +41,10 @@ def move_animal_from_another(animalA, animalB):
         else:
             return animalA_coordinate - animalA_velocity
     
-    if get_distance(animalA, animalB) < animalA.visibility_area:
-        animalA.x = get_new_coordinate(animalA.x, animalB.x, \
-                animalA.velocity)
-        animalA.y = get_new_coordinate(animalA.y, animalB.y, \
-                animalA.velocity)
+    animalA.x = get_new_coordinate(animalA.x, animalB.x, \
+            animalA.velocity)
+    animalA.y = get_new_coordinate(animalA.y, animalB.y, \
+            animalA.velocity)
 
 
 def _get_nearest_victim(predator, victims):

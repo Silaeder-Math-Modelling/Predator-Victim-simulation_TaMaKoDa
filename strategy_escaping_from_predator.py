@@ -5,7 +5,8 @@ from random import randint
 from objects import *
 from common_for_strategies import predator_move, \
     normalize_coordinates_to_field_size, \
-    move_animal_from_another
+    move_animal_from_another, get_distance, \
+	move_victim_random
 
 def victim_init(self, victim_visibility_area):
     self.visibility_area = victim_visibility_area
@@ -29,7 +30,10 @@ def world_iteration(objects, max_field_x, max_field_y):
         raise ValueError("There must be at least one victim")
 
     for victim in victims:
-        move_animal_from_another(victim, predator)
+        if get_distance(victim, predator) < victim.visibility_area:
+            move_animal_from_another(victim, predator)
+        else:
+            move_victim_random(victim, predator)
         
         
     normalize_coordinates_to_field_size(
